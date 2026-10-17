@@ -1,35 +1,38 @@
 const menuToggle = document.querySelector(".menu-toggle");
-const siteNavigation = document.querySelector(".site-nav");
-const contactForm = document.querySelector(".contact-form");
-const formFeedback = document.querySelector(".form-feedback");
-const currentYear = document.querySelector("#current-year");
+const navigation = document.querySelector("#site-navigation");
 
-if (currentYear) {
-  currentYear.textContent = new Date().getFullYear();
-}
-
-if (menuToggle && siteNavigation) {
+if (menuToggle && navigation) {
   menuToggle.addEventListener("click", () => {
-    const isExpanded = menuToggle.getAttribute("aria-expanded") === "true";
-    menuToggle.setAttribute("aria-expanded", String(!isExpanded));
-    menuToggle.setAttribute("aria-label", isExpanded ? "Open navigation menu" : "Close navigation menu");
-    siteNavigation.classList.toggle("is-open", !isExpanded);
+    const isOpen = navigation.classList.toggle("open");
+    menuToggle.setAttribute("aria-expanded", String(isOpen));
+    menuToggle.setAttribute("aria-label", isOpen ? "Close navigation menu" : "Open navigation menu");
   });
 
-  siteNavigation.addEventListener("click", (event) => {
-    if (event.target instanceof HTMLAnchorElement) {
+  navigation.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => {
+      navigation.classList.remove("open");
       menuToggle.setAttribute("aria-expanded", "false");
       menuToggle.setAttribute("aria-label", "Open navigation menu");
-      siteNavigation.classList.remove("is-open");
-    }
+    });
   });
 }
 
-if (contactForm && formFeedback) {
-  contactForm.addEventListener("submit", (event) => {
+const year = document.querySelector("#current-year");
+if (year) year.textContent = new Date().getFullYear();
+
+const form = document.querySelector("#contact-form");
+const feedback = document.querySelector(".form-feedback");
+if (form && feedback) {
+  form.addEventListener("submit", (event) => {
     event.preventDefault();
-    const formData = new FormData(contactForm);
-    const name = String(formData.get("name") || "").trim();
-    formFeedback.textContent = `Thanks, ${name}. Your security cover enquiry is ready to connect to your enquiry system. Your information has not been sent or stored.`;
+    const data = new FormData(form);
+    const name = String(data.get("name") || "").trim();
+    const phone = String(data.get("phone") || "").trim();
+    const service = String(data.get("service") || "").trim();
+    if (!name || !phone || !service) {
+      feedback.textContent = "Please complete your name, phone number and site type.";
+      return;
+    }
+    feedback.textContent = "Thanks, " + name + ". The form is a front-end demo and has not sent your enquiry. Connect a form service or backend to receive enquiries.";
   });
 }
