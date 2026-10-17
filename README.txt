@@ -8,6 +8,7 @@ Files:
 - styles.css: black, white and red responsive design
 - script.js: mobile navigation, current year and demo form feedback
 - logo.jpeg: logo image supplied by you
+- certificate-incorporation-redacted.png and private-security-license-redacted.png: certificate images displayed in the licenses section with sensitive details redacted
 
 To edit and preview:
 1. Extract the ZIP file.

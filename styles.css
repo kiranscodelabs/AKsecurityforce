@@ -57,10 +57,13 @@
 
 .license-section{padding:100px 0;background:#f7f7f7}
 .license-heading{margin-bottom:38px}
-.license-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.license-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;align-items:start}
 .license-card{position:relative;background:#fff;border:1px solid #e7e7e7;border-radius:22px;padding:30px 26px 26px;box-shadow:0 10px 30px rgba(0,0,0,.03)}
 .license-number{position:absolute;right:22px;top:18px;font-size:11px;font-weight:800;letter-spacing:.12em;color:#9d9d9d}
-.license-icon{display:grid;place-items:center;width:54px;height:54px;border-radius:14px;background:#fff2f3;color:var(--red);font-size:22px;font-weight:800;margin-bottom:20px}
 .license-card h3{font-family:Manrope,sans-serif;font-size:21px;letter-spacing:-.04em;margin:0 0 12px}
 .license-card p{margin:0;color:#666;font-size:14px;line-height:1.8}
-@media (max-width:900px){.license-grid{grid-template-columns:1fr}}
+.license-card .license-detail{margin-top:10px;font-size:13px}
+.license-image-link{display:block;margin-top:20px;color:var(--red);font-size:12px;font-weight:700}
+.license-document{display:block;width:100%;height:460px;object-fit:contain;margin-bottom:10px;border:1px solid #e7e7e7;border-radius:12px;background:#f4f4f4}
+.license-privacy-note{margin-top:12px!important;color:#777!important;font-size:11px!important}
+@media (max-width:900px){.license-grid{grid-template-columns:1fr}.license-document{height:400px}}
