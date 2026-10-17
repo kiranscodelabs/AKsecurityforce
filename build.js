@@ -2,6 +2,7 @@ const fs = require("fs");
 const path = require("path");
 
 const root = __dirname;
+const outputDirectory = path.join(root, "dist");
 const template = fs.readFileSync(path.join(root, "index.template.html"), "utf8");
 const includePattern = /(^[ \t]*)<!-- INCLUDE: ([a-z-]+) -->[ \t]*/gm;
 const includes = Array.from(template.matchAll(includePattern));
@@ -30,4 +31,30 @@ if (html.includes("<!-- INCLUDE:")) {
 }
 
 fs.writeFileSync(path.join(root, "index.html"), html, "utf8");
-console.log(`Built index.html from ${includes.length} HTML files in the project root.`);
+
+const publicAssets = [
+  "styles.css",
+  "script.js",
+  "logo.jpeg",
+  "image1.jpeg",
+  "image2.jpeg",
+  "certificate-incorporation-redacted.png",
+  "private-security-license-redacted.png",
+];
+
+fs.mkdirSync(outputDirectory, { recursive: true });
+fs.writeFileSync(path.join(outputDirectory, "index.html"), html, "utf8");
+
+for (const asset of publicAssets) {
+  const sourcePath = path.join(root, asset);
+
+  if (!fs.existsSync(sourcePath)) {
+    throw new Error(`Missing public asset: ${asset}`);
+  }
+
+  fs.copyFileSync(sourcePath, path.join(outputDirectory, asset));
+}
+
+console.log(
+  `Built index.html from ${includes.length} HTML files and prepared the Vercel dist/ output.`,
+);
